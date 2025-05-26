@@ -524,6 +524,9 @@
         const submitBtn = document.getElementById('submitBtn');
         const formMessages = document.getElementById('form-messages');
         
+        // URL de votre API déployée sur Render
+        const API_BASE_URL = 'https://magickbot.onrender.com';
+        
         if (contactForm) {
             contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
@@ -533,6 +536,9 @@
                 const nom = document.getElementById('nom').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const message = document.getElementById('message').value.trim();
+                const entreprise = document.getElementById('entreprise').value.trim();
+                const telephone = document.getElementById('telephone').value.trim();
+                const budget = document.getElementById('budget').value.trim();
                 
                 if (!nom || !email || !message) {
                     showMessage('⚠️ Veuillez remplir tous les champs obligatoires.', 'error');
@@ -556,19 +562,45 @@
                 // Afficher un message de progression sans défilement
                 showMessage('📤 Envoi de votre demande en cours...', 'info', false);
                 
-                // Simulation d'envoi (remplacer par votre API plus tard)
-                setTimeout(() => {
-                    // Restaurer la position de défilement
-                    window.scrollTo({ top: currentScrollPosition, behavior: 'instant' });
+                try {
+                    // Appel API réel
+                    const response = await fetch(`${API_BASE_URL}/api/contact`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            nom,
+                            email,
+                            entreprise,
+                            telephone,
+                            budget,
+                            message
+                        })
+                    });
                     
-                    // Succès simulé avec animation confetti
-                    showSuccessMessage(nom, false);
-                    contactForm.reset();
+                    const data = await response.json();
                     
+                    if (response.ok && data.success) {
+                        // Restaurer la position de défilement
+                        window.scrollTo({ top: currentScrollPosition, behavior: 'instant' });
+                        
+                        // Succès avec animation confetti
+                        showSuccessMessage(nom, false);
+                        contactForm.reset();
+                    } else {
+                        // Erreur du serveur
+                        showMessage(`❌ ${data.message || 'Erreur lors de l\'envoi. Veuillez réessayer.'}`, 'error');
+                    }
+                    
+                } catch (error) {
+                    console.error('Erreur réseau:', error);
+                    showMessage('❌ Erreur de connexion. Vérifiez votre connexion internet et réessayez.', 'error');
+                } finally {
                     // Réactiver le bouton
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Envoyer la demande</span>';
-                }, 2000);
+                }
             });
         }
         
