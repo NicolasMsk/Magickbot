@@ -3,6 +3,8 @@
 .env.local
 .env.production
 .env.development
+python/.env
+backend/.env
 
 # Python
 __pycache__/
@@ -38,3 +40,10 @@ Thumbs.db
 # Data files (optionnel)
 data/*.csv
 !data/.gitkeep
+
+# Sensitive files
+*.key
+*.pem
+*.p12
+*.pfx
+config/secrets.*
