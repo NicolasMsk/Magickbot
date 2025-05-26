@@ -244,15 +244,15 @@ input, textarea, select {
 .nav__brand {
   display: flex;
   align-items: center;
-  gap: var(--mb-0-5);
+  gap: var(--mb-0-75);
   font-family: var(--heading-font);
   font-weight: var(--font-bold);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   color: var(--gray-900);
 }
 
 .nav__icon {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   color: var(--primary-color);
 }
 
@@ -890,16 +890,16 @@ input, textarea, select {
 .footer__logo {
   display: flex;
   align-items: center;
-  gap: var(--mb-0-5);
+  gap: var(--mb-0-75);
   font-family: var(--heading-font);
   font-weight: var(--font-bold);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin-bottom: var(--mb-1);
 }
 
 .footer__logo i {
   color: var(--primary-color);
-  font-size: 1.8rem;
+  font-size: 2.2rem;
 }
 
 .footer__description {
