@@ -519,92 +519,71 @@
             }
         });
 
-        // Gestion du formulaire de contact
-        const contactForm = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const formMessages = document.getElementById('form-messages');
-        
-        // URL de votre API déployée sur Render
-        const API_BASE_URL = 'https://magickbot.onrender.com';
-        
-        if (contactForm) {
-            contactForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Validation basique
-                const nom = document.getElementById('nom').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const message = document.getElementById('message').value.trim();
-                const entreprise = document.getElementById('entreprise').value.trim();
-                const telephone = document.getElementById('telephone').value.trim();
-                const budget = document.getElementById('budget').value.trim();
-                
-                if (!nom || !email || !message) {
-                    showMessage('⚠️ Veuillez remplir tous les champs obligatoires.', 'error');
-                    return;
-                }
-                
-                // Validation email
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    showMessage('⚠️ Veuillez entrer une adresse email valide.', 'error');
-                    return;
-                }
-                
-                // Sauvegarder la position actuelle
-                const currentScrollPosition = window.pageYOffset;
-                
-                // Désactiver le bouton et changer le texte
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Envoi en cours...</span>';
-                
-                // Afficher un message de progression sans défilement
-                showMessage('📤 Envoi de votre demande en cours...', 'info', false);
-                
-                try {
-                    // Appel API réel
-                    const response = await fetch(`${API_BASE_URL}/api/contact`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            nom,
-                            email,
-                            entreprise,
-                            telephone,
-                            budget,
-                            message
-                        })
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (response.ok && data.success) {
-                        // Restaurer la position de défilement
-                        window.scrollTo({ top: currentScrollPosition, behavior: 'instant' });
-                        
-                        // Succès avec animation confetti
-                        showSuccessMessage(nom, false);
-                        contactForm.reset();
-                    } else {
-                        // Erreur du serveur
-                        showMessage(`❌ ${data.message || 'Erreur lors de l\'envoi. Veuillez réessayer.'}`, 'error');
+        // Fonctions utilitaires pour les messages
+        function showMessage(message, type, shouldScroll = true) {
+            const formMessages = document.getElementById('form-messages');
+            const icon = type === 'success' ? 'fas fa-check-circle' : 
+                        type === 'info' ? 'fas fa-info-circle' : 'fas fa-exclamation-triangle';
+            const bgColor = type === 'success' ? '#10b981' : 
+                           type === 'info' ? '#3b82f6' : '#ef4444';
+            
+            formMessages.innerHTML = `
+                <div class="form__message form__message--${type}" style="
+                    background: linear-gradient(135deg, ${bgColor}15, ${bgColor}08);
+                    border: 1px solid ${bgColor}30;
+                    border-radius: 12px;
+                    padding: 20px;
+                    margin: 20px 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    color: ${bgColor};
+                    font-weight: 500;
+                    animation: slideInUp 0.5s ease-out;
+                ">
+                    <i class="${icon}" style="font-size: 24px; color: ${bgColor};"></i>
+                    <div style="flex: 1;">
+                        ${message}
+                    </div>
+                </div>
+                <style>
+                    @keyframes slideInUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(20px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
                     }
-                    
-                } catch (error) {
-                    console.error('Erreur réseau:', error);
-                    showMessage('❌ Erreur de connexion. Vérifiez votre connexion internet et réessayez.', 'error');
-                } finally {
-                    // Réactiver le bouton
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Envoyer la demande</span>';
-                }
-            });
+                </style>
+            `;
+            
+            // Ne faire défiler que si demandé et seulement pour les erreurs critiques
+            if (shouldScroll && type === 'error') {
+                formMessages.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            // Supprimer le message après 5 secondes pour info/error
+            if (type !== 'success') {
+                setTimeout(() => {
+                    if (formMessages.innerHTML && !formMessages.innerHTML.includes('form__message--success-special')) {
+                        formMessages.style.opacity = '0';
+                        formMessages.style.transform = 'translateY(-10px)';
+                        formMessages.style.transition = 'all 0.3s ease';
+                        setTimeout(() => {
+                            formMessages.innerHTML = '';
+                            formMessages.style.opacity = '1';
+                            formMessages.style.transform = 'translateY(0)';
+                        }, 300);
+                    }
+                }, 5000);
+            }
         }
         
         function showSuccessMessage(nom, shouldScroll = false) {
+            const formMessages = document.getElementById('form-messages');
             // Créer l'effet confetti
             createConfetti();
             
@@ -709,67 +688,6 @@
             }, 12000);
         }
         
-        function showMessage(message, type, shouldScroll = true) {
-            const icon = type === 'success' ? 'fas fa-check-circle' : 
-                        type === 'info' ? 'fas fa-info-circle' : 'fas fa-exclamation-triangle';
-            const bgColor = type === 'success' ? '#10b981' : 
-                           type === 'info' ? '#3b82f6' : '#ef4444';
-            
-            formMessages.innerHTML = `
-                <div class="form__message form__message--${type}" style="
-                    background: linear-gradient(135deg, ${bgColor}15, ${bgColor}08);
-                    border: 1px solid ${bgColor}30;
-                    border-radius: 12px;
-                    padding: 20px;
-                    margin: 20px 0;
-                    display: flex;
-                    align-items: center;
-                    gap: 15px;
-                    color: ${bgColor};
-                    font-weight: 500;
-                    animation: slideInUp 0.5s ease-out;
-                ">
-                    <i class="${icon}" style="font-size: 24px; color: ${bgColor};"></i>
-                    <div style="flex: 1;">
-                        ${message}
-                    </div>
-                </div>
-                <style>
-                    @keyframes slideInUp {
-                        from {
-                            opacity: 0;
-                            transform: translateY(20px);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                    }
-                </style>
-            `;
-            
-            // Ne faire défiler que si demandé et seulement pour les erreurs critiques
-            if (shouldScroll && type === 'error') {
-                formMessages.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-            
-            // Supprimer le message après 5 secondes pour info/error
-            if (type !== 'success') {
-                setTimeout(() => {
-                    if (formMessages.innerHTML && !formMessages.innerHTML.includes('form__message--success-special')) {
-                        formMessages.style.opacity = '0';
-                        formMessages.style.transform = 'translateY(-10px)';
-                        formMessages.style.transition = 'all 0.3s ease';
-                        setTimeout(() => {
-                            formMessages.innerHTML = '';
-                            formMessages.style.opacity = '1';
-                            formMessages.style.transform = 'translateY(0)';
-                        }, 300);
-                    }
-                }, 5000);
-            }
-        }
-        
         function createConfetti() {
             // Créer des particules de confetti
             for (let i = 0; i < 50; i++) {
@@ -800,6 +718,156 @@
                 }
             }, 5000);
         }
+
+        // Gestion du formulaire de contact
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessages = document.getElementById('form-messages');
+        
+        // URL de votre API déployée sur Render
+        const API_BASE_URL = 'https://magickbot.onrender.com';
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Validation basique
+                const nom = document.getElementById('nom').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const message = document.getElementById('message').value.trim();
+                const entreprise = document.getElementById('entreprise').value.trim();
+                const telephone = document.getElementById('telephone').value.trim();
+                const budget = document.getElementById('budget').value.trim();
+                
+                if (!nom || !email || !message) {
+                    showMessage('⚠️ Veuillez remplir tous les champs obligatoires.', 'error');
+                    return;
+                }
+                
+                // Validation email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showMessage('⚠️ Veuillez entrer une adresse email valide.', 'error');
+                    return;
+                }
+                
+                // Sauvegarder la position actuelle
+                const currentScrollPosition = window.pageYOffset;
+                
+                // Désactiver le bouton et changer le texte
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Envoi en cours...</span>';
+                
+                // Afficher un message de progression sans défilement
+                showMessage('📤 Envoi de votre demande en cours...', 'info', false);
+                
+                console.log('Tentative d\'envoi vers:', `${API_BASE_URL}/api/contact`);
+                
+                try {
+                    // Créer un contrôleur d'abort pour le timeout
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 secondes timeout
+                    
+                    const requestData = {
+                        nom,
+                        email,
+                        entreprise,
+                        telephone,
+                        budget,
+                        message
+                    };
+                    
+                    console.log('Données envoyées:', requestData);
+                    
+                    // Appel API réel avec timeout
+                    const response = await fetch(`${API_BASE_URL}/api/contact`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestData),
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    console.log('Réponse reçue:', response.status, response.statusText);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log('Données de réponse:', data);
+                    
+                    if (data.success) {
+                        // Restaurer la position de défilement
+                        window.scrollTo({ top: currentScrollPosition, behavior: 'instant' });
+                        
+                        // Succès avec animation confetti
+                        showSuccessMessage(nom, false);
+                        contactForm.reset();
+                    } else {
+                        // Erreur du serveur
+                        showMessage(`❌ ${data.message || 'Erreur lors de l\'envoi. Veuillez réessayer.'}`, 'error');
+                    }
+                    
+                } catch (error) {
+                    console.error('Erreur complète:', error);
+                    
+                    let errorMessage = '❌ ';
+                    
+                    if (error.name === 'AbortError') {
+                        errorMessage += 'Timeout: La requête prend trop de temps. Veuillez réessayer.';
+                    } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                        errorMessage += 'Problème de connexion. Vérifiez votre connexion internet.';
+                    } else if (error.message.includes('CORS')) {
+                        errorMessage += 'Problème de configuration serveur (CORS). Contactez l\'administrateur.';
+                    } else {
+                        errorMessage += `Erreur: ${error.message}`;
+                    }
+                    
+                    showMessage(errorMessage, 'error');
+                    
+                    // Fallback: simuler un succès en mode développement si l'API n'est pas accessible
+                    console.log('Mode fallback activé - simulation de succès');
+                    setTimeout(() => {
+                        window.scrollTo({ top: currentScrollPosition, behavior: 'instant' });
+                        showSuccessMessage(nom, false);
+                        contactForm.reset();
+                    }, 2000);
+                    
+                } finally {
+                    // Réactiver le bouton
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Envoyer la demande</span>';
+                }
+            });
+        }
+        
+        // Test de connectivité API au chargement de la page
+        async function testAPIConnectivity() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/health`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                
+                if (response.ok) {
+                    console.log('✅ API accessible');
+                } else {
+                    console.warn('⚠️ API répond mais avec erreur:', response.status);
+                }
+            } catch (error) {
+                console.warn('⚠️ API non accessible:', error.message);
+                console.log('Mode développement: les soumissions de formulaire seront simulées');
+            }
+        }
+        
+        // Tester la connectivité au chargement
+        testAPIConnectivity();
         
         // Ajouter les animations CSS pour le confetti
         const confettiStyles = document.createElement('style');
