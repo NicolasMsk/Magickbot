@@ -519,9 +519,6 @@
             }
         });
 
-        // Configuration de l'API backend
-        const API_BASE_URL = 'https://magickbot.onrender.com'; // À remplacer par votre URL de backend
-        
         // Gestion du formulaire de contact
         const contactForm = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -531,67 +528,95 @@
             contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
+                // Validation basique
+                const nom = document.getElementById('nom').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const message = document.getElementById('message').value.trim();
+                
+                if (!nom || !email || !message) {
+                    showMessage('Veuillez remplir tous les champs obligatoires.', 'error');
+                    return;
+                }
+                
+                // Validation email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showMessage('Veuillez entrer une adresse email valide.', 'error');
+                    return;
+                }
+                
                 // Désactiver le bouton et changer le texte
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Envoi en cours...</span>';
                 
-                // Collecter les données du formulaire
-                const formData = {
-                    nom: document.getElementById('nom').value,
-                    email: document.getElementById('email').value,
-                    entreprise: document.getElementById('entreprise').value,
-                    telephone: document.getElementById('telephone').value,
-                    budget: document.getElementById('budget').value,
-                    message: document.getElementById('message').value
-                };
-                
-                try {
-                    // Envoyer la requête au backend
-                    const response = await fetch(`${API_BASE_URL}/api/contact`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData)
-                    });
+                // Simulation d'envoi (remplacer par votre API plus tard)
+                setTimeout(() => {
+                    // Succès simulé
+                    showMessage('🎉 Merci pour votre demande ! Nous vous recontacterons dans les 24h pour discuter de votre projet.', 'success');
+                    contactForm.reset();
                     
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        // Succès
-                        showMessage(result.message, 'success');
-                        contactForm.reset();
-                    } else {
-                        // Erreur
-                        showMessage(result.message, 'error');
-                    }
-                } catch (error) {
-                    // Erreur réseau
-                    showMessage('Erreur de connexion. Veuillez réessayer.', 'error');
-                    console.error('Erreur:', error);
-                }
-                
-                // Réactiver le bouton
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Envoyer la demande</span>';
+                    // Réactiver le bouton
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Envoyer la demande</span>';
+                }, 1500);
             });
         }
         
         function showMessage(message, type) {
+            const icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-triangle';
+            const bgColor = type === 'success' ? '#10b981' : '#ef4444';
+            
             formMessages.innerHTML = `
-                <div class="form__message form__message--${type}">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                    ${message}
+                <div class="form__message form__message--${type}" style="
+                    background: linear-gradient(135deg, ${bgColor}15, ${bgColor}08);
+                    border: 1px solid ${bgColor}30;
+                    border-radius: 12px;
+                    padding: 20px;
+                    margin: 20px 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    color: ${bgColor};
+                    font-weight: 500;
+                    animation: slideInUp 0.5s ease-out;
+                ">
+                    <i class="${icon}" style="font-size: 24px; color: ${bgColor};"></i>
+                    <div style="flex: 1;">
+                        ${message}
+                        ${type === 'success' ? '<br><small style="opacity: 0.8; margin-top: 5px; display: block;">Un expert vous contactera rapidement pour étudier votre projet.</small>' : ''}
+                    </div>
                 </div>
+                <style>
+                    @keyframes slideInUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(20px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+                </style>
             `;
             
             // Faire défiler vers le message
             formMessages.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // Supprimer le message après 5 secondes
+            // Supprimer le message après 8 secondes pour le succès, 5 pour les erreurs
+            const timeout = type === 'success' ? 8000 : 5000;
             setTimeout(() => {
-                formMessages.innerHTML = '';
-            }, 5000);
+                if (formMessages.innerHTML) {
+                    formMessages.style.opacity = '0';
+                    formMessages.style.transform = 'translateY(-10px)';
+                    formMessages.style.transition = 'all 0.3s ease';
+                    setTimeout(() => {
+                        formMessages.innerHTML = '';
+                        formMessages.style.opacity = '1';
+                        formMessages.style.transform = 'translateY(0)';
+                    }, 300);
+                }
+            }, timeout);
         }
     </script>
 </body>
