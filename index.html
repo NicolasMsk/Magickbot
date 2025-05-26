@@ -15,7 +15,7 @@
     <header class="header">
         <nav class="nav container">
             <div class="nav__brand">
-                <i class="fas fa-robot nav__icon"></i>
+                <img src="assets/images/logo_magickbot.png" alt="Magickbot Logo" class="nav__logo">
                 <span class="nav__title">Magickbot</span>
             </div>
             <div class="nav__menu" id="nav-menu">
@@ -314,7 +314,7 @@
                             <i class="fas fa-phone"></i>
                             <div>
                                 <h4>Téléphone</h4>
-                                <p>+33 1 23 45 67 89</p>
+                                <p>07 56 93 16 47</p>
                             </div>
                         </div>
                         <div class="contact__detail">
@@ -396,7 +396,7 @@
                 <div class="footer__content">
                     <div class="footer__brand">
                         <div class="footer__logo">
-                            <i class="fas fa-robot"></i>
+                            <img src="assets/images/logo_magickbot.png" alt="Magickbot Logo" class="footer__logo-img">
                             <span>Magickbot</span>
                         </div>
                         <p class="footer__description">
@@ -452,8 +452,8 @@
                 <div class="footer__bottom">
                     <p class="footer__copy">
                         &copy; 2024 Magickbot. Tous droits réservés. 
-                        <a href="#" class="footer__legal">Mentions légales</a> | 
-                        <a href="#" class="footer__legal">Politique de confidentialité</a>
+                        <a href="mentions-legales.html" class="footer__legal">Mentions légales</a> | 
+                        <a href="politique-confidentialite.html" class="footer__legal">Politique de confidentialité</a>
                     </p>
                 </div>
             </div>
@@ -880,5 +880,58 @@
         `;
         document.head.appendChild(confettiStyles);
     </script>
+
+    <style>
+        /* Logo styles */
+        .nav__logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            margin-right: 12px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer__logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-right: 12px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav__brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer__logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .footer__logo span {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-color-light);
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .nav__logo {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .footer__logo-img {
+                width: 36px;
+                height: 36px;
+            }
+        }
+    </style>
 </body>
 </html>

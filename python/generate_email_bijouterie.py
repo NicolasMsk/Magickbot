@@ -4,7 +4,16 @@ import time
 from datetime import datetime
 import json
 import os
+from dotenv import load_dotenv
 
+# Charger les variables d'environnement
+load_dotenv()
+
+# Configurer la clé API OpenAI
+openai.api_key = os.getenv('OPENAI_API_KEY')
+
+if not openai.api_key:
+    raise ValueError("OPENAI_API_KEY non trouvée dans les variables d'environnement. Vérifiez votre fichier .env")
 
 
 def generate_e_mail_bijouterie(text):
@@ -25,9 +34,9 @@ def generate_e_mail_bijouterie(text):
 
 
 
-def build_openai_prompt(nom, description, website, demo_url, linkedin_url, booking_url, langue="français"):
+def build_openai_prompt(nom, description, website, demo_url, website_url, booking_url, langue="français"):
     prompt = f"""
-Tu es un expert en prospection commerciale B2B dans le secteur de la bijouterie.
+Tu es Nicolas Musicki, expert en prospection commerciale B2B dans le secteur de la bijouterie.
 
 Contexte :
 - Tu contactes la bijouterie "{nom}".
@@ -38,12 +47,17 @@ Contexte :
 Ta mission :
 - Rédige un e-mail de prospection **personnalisé** et convaincant, en mettant en avant :
     * La valeur ajoutée pour cette bijouterie en particulier (adapte le texte à leur univers, gamme ou valeur)
-    * Le fait que tu as déjà développé une démo spécialement pour eux, accessible ici : {demo_url}
-    * Un lien vers ton LinkedIn professionnel : {linkedin_url}
-    * Un lien pour réserver un créneau dans ton agenda et discuter en direct : {booking_url}
-- L'e-mail doit être court (6 à 8 lignes), humain, professionnel, et donner envie d'essayer la démo ou de booker un rendez-vous.
-- Termine par une phrase d'appel à l'action claire.
+    * Le fait que tu as déjà créé un chatbot spécialement pour leur site web après avoir analysé leur activité
+    * Que si cela les intéresse, ils peuvent booker un créneau avec toi pour une démo en live personnalisée
+    * Pendant cette démo, tu pourras poser des questions sur leur site, comprendre leurs besoins spécifiques et leur montrer exactement comment le chatbot peut s'adapter à leur bijouterie
+    * Un lien vers ton site web professionnel : {website_url}
+    * Un lien pour réserver un créneau dans ton agenda : {booking_url}
+    * Ton numéro de téléphone : 07 56 93 16 47
+- L'e-mail doit être court (6 à 8 lignes), humain, professionnel, et donner envie de booker un rendez-vous pour la démo personnalisée.
+- Termine par une phrase d'appel à l'action claire pour booker la démo.
 - Commence toujours par "Bonjour," en t'adressant au responsable, sans formule trop générique.
+- Signe avec "Cordialement, Nicolas Musicki" et ajoute ton numéro de téléphone.
+- ULTRA IMPORTANT : L'e-mail doit avoir l'air écrit par un humain au maximum. Utilise un ton naturel, spontané et authentique. Évite le jargon commercial et les formules trop polies ou robotiques.
 - IMPORTANT : Évite les mots qui déclenchent les filtres anti-spam comme "gratuit", "urgent", "offre limitée", "garantie", "promotion".
 - Utilise un ton naturel et professionnel, évite les majuscules excessives et les points d'exclamation multiples.
 
@@ -59,9 +73,7 @@ N'ajoute jamais de liens imaginaires : les liens doivent être exactement ceux c
 """
     return prompt
 
-
-
-def process_csv_and_generate_emails(csv_path, demo_url, linkedin_url, booking_url):
+def process_csv_and_generate_emails(csv_path, website_url, booking_url):
     """
     Charge le CSV, génère les emails personnalisés et sauvegarde le résultat
     """
@@ -70,6 +82,10 @@ def process_csv_and_generate_emails(csv_path, demo_url, linkedin_url, booking_ur
         print(f"Chargement du fichier CSV : {csv_path}")
         df = pd.read_csv(csv_path)
         print(f"Nombre de bijouteries trouvées : {len(df)}")
+        
+        # Prendre seulement les 10 premières lignes pour les tests
+        df = df.head(10)
+        print(f"Utilisation des 10 premières bijouteries pour les tests")
         
         # Initialiser les colonnes pour les emails
         df['email_objet'] = ''
@@ -80,13 +96,13 @@ def process_csv_and_generate_emails(csv_path, demo_url, linkedin_url, booking_ur
         for index, row in df.iterrows():
             print(f"Génération email pour {row['nom']} ({index+1}/{len(df)})")
             
-            # Construire le prompt
+            # Construire le prompt (sans demo_url)
             prompt = build_openai_prompt(
                 nom=row['nom'],
                 description=row['description'] if pd.notna(row['description']) else "Bijouterie",
                 website=row['website'] if pd.notna(row['website']) else "Site web non disponible",
-                demo_url=demo_url,
-                linkedin_url=linkedin_url,
+                demo_url="",  # Plus besoin
+                website_url=website_url,
                 booking_url=booking_url,
                 langue="français"
             )
@@ -136,10 +152,9 @@ def process_csv_and_generate_emails(csv_path, demo_url, linkedin_url, booking_ur
 
 # Fonction principale pour exécuter le script
 def main():
-    # Configuration des URLs (à modifier selon vos besoins)
-    demo_url = "https://votre-demo-url.com"
-    linkedin_url = "https://linkedin.com/in/votre-profil"
-    booking_url = "https://calendly.com/votre-lien"
+    # Configuration des URLs (sans demo_url)
+    website_url = "https://magickbot.com/"
+    booking_url = "https://magickbot.zohobookings.eu/#/magickbot"
     
     # Chemin vers le fichier CSV
     csv_path = "data/trustpilot_bijouteries_final_20250524_152732.csv"
@@ -149,8 +164,8 @@ def main():
         print(f"Erreur : Le fichier {csv_path} n'existe pas.")
         return
     
-    # Traiter le CSV et générer les emails
-    output_file = process_csv_and_generate_emails(csv_path, demo_url, linkedin_url, booking_url)
+    # Traiter le CSV et générer les emails (sans demo_url)
+    output_file = process_csv_and_generate_emails(csv_path, website_url, booking_url)
     
     if output_file:
         print(f"Traitement terminé avec succès ! Fichier de sortie : {output_file}")
