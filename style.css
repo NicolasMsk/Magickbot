@@ -517,19 +517,40 @@ input, textarea, select {
 
 .service__features {
   margin-bottom: var(--mb-2);
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.service__features::-webkit-scrollbar {
+  width: 4px;
+}
+
+.service__features::-webkit-scrollbar-track {
+  background: var(--gray-100);
+  border-radius: 2px;
+}
+
+.service__features::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 2px;
 }
 
 .service__features li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--mb-0-5);
-  margin-bottom: var(--mb-0-5);
+  margin-bottom: var(--mb-0-75);
   color: var(--gray-600);
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .service__features i {
   color: var(--primary-color);
   font-size: var(--small-font-size);
+  margin-top: 0.15rem;
+  flex-shrink: 0;
 }
 
 .service__pricing {
@@ -1691,10 +1712,26 @@ input, textarea, select {
   font-size: 1rem;
 }
 
+/* Style spécial pour l'icône d'essai gratuit */
+.guarantee__item i.fa-gift {
+  color: #28a745;
+}
+
 /* ===== SERVICE CARDS UPDATES ===== */
 .service__cta {
   margin-top: var(--mb-1-5);
   margin-bottom: var(--mb-0-5);
+}
+
+.service__cta.btn--premium {
+  background: linear-gradient(135deg, var(--gray-700), var(--gray-800));
+  color: var(--white-color);
+  box-shadow: 0 8px 30px rgba(52, 58, 64, 0.3);
+}
+
+.service__cta.btn--premium:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(52, 58, 64, 0.4);
 }
 
 .service__guarantee {
@@ -1886,6 +1923,57 @@ input, textarea, select {
   transform: translateY(-2px);
 }
 
+/* ===== CONTACT GUARANTEE SECTION ===== */
+.contact__guarantee {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 140, 66, 0.05));
+  border: 1px solid rgba(255, 107, 53, 0.2);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  margin-bottom: var(--mb-2-5);
+}
+
+.contact__guarantee-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mb-1);
+  margin-bottom: var(--mb-1-5);
+}
+
+.contact__guarantee-item:last-child {
+  margin-bottom: 0;
+}
+
+.contact__guarantee-item i {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white-color);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.contact__guarantee-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.contact__guarantee-text strong {
+  color: var(--gray-900);
+  font-weight: var(--font-semi-bold);
+  font-size: 1.1rem;
+}
+
+.contact__guarantee-text span {
+  color: var(--gray-600);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
 /* ===== RESPONSIVE UPDATES ===== */
 @media screen and (max-width: 968px) {
   .guarantees__section {
@@ -1925,31 +2013,25 @@ input, textarea, select {
   }
   
   .contact__guarantee {
-    padding: 1rem;
+    padding: 1.5rem;
   }
   
   .contact__guarantee-item {
-    flex-direction: column;
-    gap: var(--mb-0-5);
-    text-align: center;
+    gap: var(--mb-0-75);
   }
   
-  .faq__cta {
-    padding: 2rem 1.5rem;
-    margin: var(--mb-2) auto 0;
+  .contact__guarantee-item i {
+    width: 45px;
+    height: 45px;
+    font-size: 1.125rem;
   }
   
-  .faq__cta h3 {
-    font-size: 1.25rem;
-  }
-  
-  .faq__cta p {
+  .contact__guarantee-text strong {
     font-size: 1rem;
   }
   
-  .faq__cta-buttons {
-    flex-direction: column;
-    align-items: stretch;
+  .contact__guarantee-text span {
+    font-size: 0.9rem;
   }
 }
 
@@ -1980,5 +2062,22 @@ input, textarea, select {
   
   .faq__cta p {
     font-size: 0.9rem;
+  }
+  
+  .contact__guarantee {
+    padding: 1rem;
+  }
+  
+  .contact__guarantee-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--mb-0-5);
+  }
+  
+  .contact__guarantee-item i {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
   }
 }
