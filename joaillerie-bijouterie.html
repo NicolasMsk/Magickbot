@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solutions IA Joaillerie & Bijouterie - Magickbot</title>
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io/site.webmanifest">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__brand">
+                <img src="logo_magickbot.png" alt="Magickbot Logo" class="nav__logo">
+                <span class="nav__title">Magickbot</span>
+            </div>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html#accueil" class="nav__link">Accueil</a></li>
+                    <li class="nav__item"><a href="index.html#services" class="nav__link">Services</a></li>
+                    <li class="nav__item"><a href="index.html#about" class="nav__link">À propos</a></li>
+                    <li class="nav__item"><a href="index.html#testimonials" class="nav__link">Témoignages</a></li>
+                    <li class="nav__item"><a href="index.html#contact" class="nav__link">Contact</a></li>
+                    <li class="nav__item nav__dropdown">
+                        <a href="#" class="nav__link nav__dropdown-toggle">
+                            Catégories <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <ul class="nav__dropdown-menu">
+                            <li><a href="e-commerce.html" class="nav__dropdown-link">E-commerce</a></li>
+                            <li><a href="immobilier.html" class="nav__dropdown-link">Immobilier</a></li>
+                            <li><a href="joaillerie-bijouterie.html" class="nav__dropdown-link active">Joaillerie & Bijouterie</a></li>
+                            <li><a href="bien-etre-esthetique.html" class="nav__dropdown-link">Bien-être & Esthétique</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="nav__close" id="nav-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section Joaillerie -->
+    <section class="hero category-hero">
+        <div class="hero__container container">
+            <div class="hero__content">
+                <span class="hero__subtitle">Solutions IA Joaillerie & Bijouterie</span>
+                <h1 class="hero__title">
+                    Sublimez votre <span class="gradient-text">expérience client</span> avec l'IA
+                </h1>
+                <p class="hero__description">
+                    Transformez votre bijouterie avec notre assistant IA spécialisé dans le luxe et la joaillerie. 
+                    Augmentez vos ventes de 50%, personnalisez les conseils et créez une expérience d'exception.
+                </p>
+                <div class="hero__buttons">
+                    <a href="index.html#contact" class="btn btn--primary">
+                        <i class="fas fa-rocket"></i>
+                        Démarrer maintenant
+                    </a>
+                    <a href="#features" class="btn btn--secondary">
+                        <i class="fas fa-gem"></i>
+                        Voir les fonctionnalités
+                    </a>
+                </div>
+                <div class="hero__stats">
+                    <div class="stat">
+                        <span class="stat__number">50%</span>
+                        <span class="stat__label">↗ Ventes bijoux</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">80%</span>
+                        <span class="stat__label">↗ Satisfaction client</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat__number">65%</span>
+                        <span class="stat__label">↗ Panier moyen</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero__image">
+                <div class="hero__floating-card card-1">
+                    <i class="fas fa-gem"></i>
+                    <span>Conseil personnalisé</span>
+                </div>
+                <div class="hero__floating-card card-2">
+                    <i class="fas fa-heart"></i>
+                    <span>Occasions spéciales</span>
+                </div>
+                <div class="hero__floating-card card-3">
+                    <i class="fas fa-crown"></i>
+                    <span>Expertise luxe</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="services section">
+        <div class="container">
+            <div class="section__header">
+                <span class="section__subtitle">Fonctionnalités Joaillerie</span>
+                <h2 class="section__title">Une IA qui comprend l'art de la bijouterie</h2>
+                <p class="section__description">
+                    Notre chatbot joaillerie est conçu pour offrir une expérience client d'exception et maximiser vos ventes
+                </p>
+            </div>
+            
+            <div class="services__grid">
+                <div class="service__card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service__icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                    <h3 class="service__title">Conseiller Bijoux Intelligent</h3>
+                    <ul class="service__features">
+                        <li><i class="fas fa-check"></i> Recommandations selon l'occasion</li>
+                        <li><i class="fas fa-check"></i> Conseils style et morphologie</li>
+                        <li><i class="fas fa-check"></i> Guide tailles et métaux</li>
+                        <li><i class="fas fa-check"></i> Suggestions personnalisées</li>
+                    </ul>
+                </div>
+
+                <div class="service__card featured" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service__badge">Plus populaire</div>
+                    <div class="service__icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="service__title">Assistant Occasions Spéciales</h3>
+                    <ul class="service__features">
+                        <li><i class="fas fa-check"></i> Conseils mariage et fiançailles</li>
+                        <li><i class="fas fa-check"></i> Cadeaux anniversaires et fêtes</li>
+                        <li><i class="fas fa-check"></i> Budget et financement adapté</li>
+                        <li><i class="fas fa-check"></i> Service après-vente premium</li>
+                    </ul>
+                </div>
+
+                <div class="service__card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service__icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3 class="service__title">Expertise & Authentification</h3>
+                    <ul class="service__features">
+                        <li><i class="fas fa-check"></i> Information sur les pierres précieuses</li>
+                        <li><i class="fas fa-check"></i> Certificats et garanties</li>
+                        <li><i class="fas fa-check"></i> Histoire et provenance</li>
+                        <li><i class="fas fa-check"></i> Conseils d'entretien</li>
+                    </ul>
+                </div>
+
+                <div class="service__card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service__icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="service__title">Personnalisation & Création</h3>
+                    <ul class="service__features">
+                        <li><i class="fas fa-check"></i> Bijoux sur mesure</li>
+                        <li><i class="fas fa-check"></i> Gravure personnalisée</li>
+                        <li><i class="fas fa-check"></i> Devis création instantané</li>
+                        <li><i class="fas fa-check"></i> Suivi de commande artisan</li>
+                    </ul>
+                </div>
+
+                <div class="service__card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service__icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="service__title">Service Client Premium</h3>
+                    <ul class="service__features">
+                        <li><i class="fas fa-check"></i> Support privilégié 24/7</li>
+                        <li><i class="fas fa-check"></i> Garantie et assurance</li>
+                        <li><i class="fas fa-check"></i> Rendez-vous en boutique</li>
+                        <li><i class="fas fa-check"></i> Programme fidélité VIP</li>
+                    </ul>
+                </div>
+
+                <div class="service__card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service__icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="service__title">Analytics Luxe</h3>
+                    <ul class="service__features">
+                        <li><i class="fas fa-check"></i> Profil client haut de gamme</li>
+                        <li><i class="fas fa-check"></i> Tendances et préférences</li>
+                        <li><i class="fas fa-check"></i> ROI par collection</li>
+                        <li><i class="fas fa-check"></i> Prévisions saisonnières</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="about section">
+        <div class="container">
+            <div class="section__header">
+                <span class="section__subtitle">Cas d'usage</span>
+                <h2 class="section__title">Comment les bijoutiers utilisent Magickbot</h2>
+            </div>
+            
+            <div class="testimonials__grid">
+                <div class="testimonial__card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service__icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h4>Bijouterie Traditionnelle</h4>
+                    <p class="testimonial__text">
+                        "L'assistant aide nos clients à choisir la bague parfaite pour leurs fiançailles. 
+                        Nos ventes de diamants ont explosé de 70% !"
+                    </p>
+                    <div class="testimonial__stats">
+                        <span><strong>+70%</strong> ventes diamants</span>
+                        <span><strong>+85%</strong> satisfaction</span>
+                    </div>
+                </div>
+
+                <div class="testimonial__card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service__icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h4>Joaillerie Luxe</h4>
+                    <p class="testimonial__text">
+                        "Magickbot comprend nos clients VIP et leurs attentes. Le panier moyen 
+                        a doublé grâce aux recommandations personnalisées."
+                    </p>
+                    <div class="testimonial__stats">
+                        <span><strong>+100%</strong> panier moyen</span>
+                        <span><strong>+60%</strong> fidélité client</span>
+                    </div>
+                </div>
+
+                <div class="testimonial__card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service__icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h4>Créateur Bijoux</h4>
+                    <p class="testimonial__text">
+                        "L'IA guide parfaitement mes clients vers des pièces uniques. 
+                        Les commandes sur mesure ont triplé en 6 mois !"
+                    </p>
+                    <div class="testimonial__stats">
+                        <span><strong>+200%</strong> sur mesure</span>
+                        <span><strong>+45%</strong> marge bénéficiaire</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Joaillerie -->
+    <section class="testimonials section">
+        <div class="container">
+            <div class="section__header">
+                <span class="section__subtitle">Témoignages Joaillerie</span>
+                <h2 class="section__title">Ils ont transformé leur bijouterie avec Magickbot</h2>
+            </div>
+            
+            <div class="testimonials__grid">
+                <div class="testimonial__card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial__rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial__text">
+                        "Extraordinaire ! Nos clients reçoivent des conseils d'expert 24h/24. 
+                        Les ventes de bagues de fiançailles ont explosé de 150% !"
+                    </p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="testimonial__info">
+                            <h4>Claire Delacroix</h4>
+                            <span>Directrice - Bijouterie Émeraude</span>
+                        </div>
+                    </div>
+                    <div class="testimonial__results">
+                        <span class="result-item">💎 +150% bagues fiançailles</span>
+                        <span class="result-item">👑 +90% client VIP</span>
+                    </div>
+                </div>
+
+                <div class="testimonial__card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial__rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial__text">
+                        "L'IA connaît mieux nos pierres que certains vendeurs ! 
+                        Nos clients font confiance aux recommandations et achètent plus."
+                    </p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="testimonial__info">
+                            <h4>Antoine Moreau</h4>
+                            <span>Fondateur - Joaillerie Prestige</span>
+                        </div>
+                    </div>
+                    <div class="testimonial__results">
+                        <span class="result-item">💰 +120% panier moyen</span>
+                        <span class="result-item">⭐ +75% satisfaction</span>
+                    </div>
+                </div>
+
+                <div class="testimonial__card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial__rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial__text">
+                        "ROI phénoménal ! En 4 mois, Magickbot s'est remboursé 20 fois. 
+                        Mes créations sur mesure n'ont jamais été aussi demandées."
+                    </p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="testimonial__info">
+                            <h4>Isabelle Laurent</h4>
+                            <span>Créatrice - Atelier des Gemmes</span>
+                        </div>
+                    </div>
+                    <div class="testimonial__results">
+                        <span class="result-item">🎨 ROI x20 en 4 mois</span>
+                        <span class="result-item">✨ +180% créations</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="contact section">
+        <div class="container">
+            <div class="contact__container">
+                <div class="contact__info" data-aos="fade-right">
+                    <span class="section__subtitle">Prêt à sublimer votre bijouterie ?</span>
+                    <h2 class="section__title">Transformez votre expérience client en 48h</h2>
+                    <p class="contact__description">
+                        Rejoignez les bijoutiers et joailliers qui font confiance à Magickbot 
+                        pour offrir une expérience d'exception et maximiser leurs ventes.
+                    </p>
+                    
+                    <div class="contact__guarantee">
+                        <div class="contact__guarantee-item">
+                            <i class="fas fa-rocket"></i>
+                            <div class="contact__guarantee-text">
+                                <strong>Installation Express</strong>
+                                <span>Votre conseiller bijoux IA opérationnel en 48h</span>
+                            </div>
+                        </div>
+                        <div class="contact__guarantee-item">
+                            <i class="fas fa-gift"></i>
+                            <div class="contact__guarantee-text">
+                                <strong>Essai gratuit 14 jours</strong>
+                                <span>Testez sans engagement, résultats garantis</span>
+                            </div>
+                        </div>
+                        <div class="contact__guarantee-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div class="contact__guarantee-text">
+                                <strong>Résultats garantis</strong>
+                                <span>+50% de ventes dès le 1er mois ou remboursé</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero__buttons">
+                        <a href="index.html#contact" class="btn btn--primary">
+                            <i class="fas fa-rocket"></i>
+                            Démarrer maintenant
+                        </a>
+                        <a href="index.html#services" class="btn btn--secondary">
+                            <i class="fas fa-euro-sign"></i>
+                            Voir les tarifs
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="about__image" data-aos="fade-left">
+                    <div class="about__image-wrapper">
+                        <div class="about__decoration decoration-1"></div>
+                        <div class="about__decoration decoration-2"></div>
+                        <div class="about__main-visual">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__container">
+                <div class="footer__content">
+                    <div class="footer__brand">
+                        <div class="footer__logo">
+                            <img src="logo_magickbot.png" alt="Magickbot Logo" class="footer__logo-img">
+                            <span>Magickbot</span>
+                        </div>
+                        <p class="footer__description">
+                            Solutions d'intelligence artificielle pour sublimer votre bijouterie 
+                            et offrir une expérience client d'exception.
+                        </p>
+                    </div>
+                    
+                    <div class="footer__links">
+                        <div class="footer__group">
+                            <h4 class="footer__title">Solutions Joaillerie</h4>
+                            <ul class="footer__list">
+                                <li><a href="#features" class="footer__link">Fonctionnalités</a></li>
+                                <li><a href="index.html#services" class="footer__link">Tarifs</a></li>
+                                <li><a href="#" class="footer__link">Expertise bijoux</a></li>
+                                <li><a href="index.html#contact" class="footer__link">Démo gratuite</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer__group">
+                            <h4 class="footer__title">Secteurs</h4>
+                            <ul class="footer__list">
+                                <li><a href="e-commerce.html" class="footer__link">E-commerce</a></li>
+                                <li><a href="immobilier.html" class="footer__link">Immobilier</a></li>
+                                <li><a href="joaillerie-bijouterie.html" class="footer__link">Joaillerie</a></li>
+                                <li><a href="bien-etre-esthetique.html" class="footer__link">Bien-être</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer__group">
+                            <h4 class="footer__title">Support</h4>
+                            <ul class="footer__list">
+                                <li><a href="index.html#faq" class="footer__link">FAQ</a></li>
+                                <li><a href="index.html#contact" class="footer__link">Contact</a></li>
+                                <li><a href="#" class="footer__link">Guide bijoux</a></li>
+                                <li><a href="#" class="footer__link">Formation</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer__bottom">
+                    <p class="footer__copy">
+                        &copy; 2024 Magickbot. Tous droits réservés. 
+                        <a href="mentions-legales.html" class="footer__legal">Mentions légales</a> | 
+                        <a href="politique-confidentialite.html" class="footer__legal">Politique de confidentialité</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Mobile menu toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const navClose = document.getElementById('nav-close');
+
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.add('show-menu');
+            });
+        }
+
+        if (navClose) {
+            navClose.addEventListener('click', () => {
+                navMenu.classList.remove('show-menu');
+            });
+        }
+
+        // Close menu when clicking on nav links
+        const navLinks = document.querySelectorAll('.nav__link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('show-menu');
+            });
+        });
+
+        // Dropdown Menu functionality
+        const navDropdown = document.querySelector('.nav__dropdown');
+        const dropdownToggle = document.querySelector('.nav__dropdown-toggle');
+
+        if (dropdownToggle) {
+            dropdownToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                navDropdown.classList.toggle('active');
+            });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navDropdown && !navDropdown.contains(e.target)) {
+                navDropdown.classList.remove('active');
+            }
+        });
+
+        // Close dropdown when clicking on a dropdown link
+        const dropdownLinks = document.querySelectorAll('.nav__dropdown-link');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navDropdown.classList.remove('active');
+                navMenu.classList.remove('show-menu');
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY >= 100) {
+                header.classList.add('scroll-header');
+            } else {
+                header.classList.remove('scroll-header');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* Logo styles */
+        .nav__logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            margin-right: 15px;
+            object-fit: cover;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .footer__logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            margin-right: 15px;
+            object-fit: cover;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav__brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer__logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .footer__logo span {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--white-color);
+        }
+
+        /* Dropdown Menu Styles */
+        .nav__dropdown {
+            position: relative;
+        }
+
+        .nav__dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .nav__dropdown-toggle i {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .nav__dropdown.active .nav__dropdown-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .nav__dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 15px 0;
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .nav__dropdown.active .nav__dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav__dropdown-menu li {
+            list-style: none;
+        }
+
+        .nav__dropdown-link {
+            display: block;
+            padding: 12px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav__dropdown-link:hover {
+            background: linear-gradient(135deg, var(--first-color-light), transparent);
+            color: var(--first-color);
+            border-left-color: var(--first-color);
+            transform: translateX(5px);
+        }
+
+        .nav__dropdown-link.active {
+            color: var(--first-color);
+            font-weight: 600;
+        }
+
+        /* Mobile Dropdown Styles */
+        @media screen and (max-width: 768px) {
+            .nav__dropdown-menu {
+                position: static;
+                box-shadow: none;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                margin: 10px 0;
+                border-radius: 8px;
+                transform: none;
+                max-height: 0;
+                overflow: hidden;
+                opacity: 1;
+                visibility: visible;
+                transition: max-height 0.3s ease, padding 0.3s ease;
+                padding: 0;
+            }
+
+            .nav__dropdown.active .nav__dropdown-menu {
+                max-height: 300px;
+                padding: 15px 0;
+            }
+
+            .nav__dropdown-link {
+                color: var(--white-color);
+                padding: 10px 25px;
+                border-left: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav__dropdown-link:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--white-color);
+                transform: translateX(10px);
+            }
+
+            .nav__dropdown-menu li:last-child .nav__dropdown-link {
+                border-bottom: none;
+            }
+        }
+
+        /* Animation for dropdown arrow */
+        @keyframes dropdownSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav__dropdown.active .nav__dropdown-menu {
+            animation: dropdownSlide 0.3s ease-out;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .nav__logo {
+                width: 38px;
+                height: 38px;
+            }
+            
+            .footer__logo-img {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .nav__brand {
+                font-size: 1.5rem;
+            }
+            
+            .footer__logo span {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .nav__logo {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .footer__logo-img {
+                width: 42px;
+                height: 42px;
+            }
+        }
+
+        /* Styles spécifiques pour les témoignages joaillerie */
+        .testimonial__results {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .result-item {
+            background: linear-gradient(135deg, var(--first-color-light), transparent);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--first-color);
+            border: 1px solid var(--first-color-light);
+        }
+
+        .category-hero {
+            background: linear-gradient(135deg, var(--first-color) 0%, var(--first-color-alt) 100%);
+        }
+
+        @media screen and (max-width: 768px) {
+            .testimonial__results {
+                justify-content: center;
+            }
+            
+            .result-item {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</body>
+</html>
