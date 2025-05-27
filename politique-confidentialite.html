@@ -13,27 +13,7 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <nav class="nav container">
-            <div class="nav__brand">
-                <i class="fas fa-robot nav__icon"></i>
-                <span class="nav__title">Magickbot</span>
-            </div>
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item"><a href="index.html#accueil" class="nav__link">Accueil</a></li>
-                    <li class="nav__item"><a href="index.html#services" class="nav__link">Services</a></li>
-                    <li class="nav__item"><a href="index.html#about" class="nav__link">À propos</a></li>
-                    <li class="nav__item"><a href="index.html#testimonials" class="nav__link">Témoignages</a></li>
-                    <li class="nav__item"><a href="index.html#contact" class="nav__link">Contact</a></li>
-                </ul>
-                <div class="nav__close" id="nav-close">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="nav__toggle" id="nav-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </nav>
+        <!-- Navigation sera injectée automatiquement par le script -->
     </header>
 
     <!-- Main Content -->
@@ -252,41 +232,9 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="js/navigation.js"></script>
     <script>
-        // Mobile menu toggle
-        const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-menu');
-        const navClose = document.getElementById('nav-close');
-
-        if (navToggle) {
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.add('show-menu');
-            });
-        }
-
-        if (navClose) {
-            navClose.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-            });
-        }
-
-        // Close menu when clicking on nav links
-        const navLinks = document.querySelectorAll('.nav__link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-            });
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY >= 100) {
-                header.classList.add('scroll-header');
-            } else {
-                header.classList.remove('scroll-header');
-            }
-        });
+        // Le code de navigation est maintenant géré par navigation.js
     </script>
 </body>
 </html>

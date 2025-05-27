@@ -20,38 +20,7 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <nav class="nav container">
-            <div class="nav__brand">
-                <img src="logo_magickbot.png" alt="Magickbot Logo" class="nav__logo">
-                <span class="nav__title">Magickbot</span>
-            </div>
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item"><a href="#accueil" class="nav__link">Accueil</a></li>
-                    <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
-                    <li class="nav__item"><a href="#about" class="nav__link">À propos</a></li>
-                    <li class="nav__item"><a href="#testimonials" class="nav__link">Témoignages</a></li>
-                    <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
-                    <li class="nav__item nav__dropdown">
-                        <a href="#" class="nav__link nav__dropdown-toggle">
-                            Catégories <i class="fas fa-chevron-down"></i>
-                        </a>
-                        <ul class="nav__dropdown-menu">
-                            <li><a href="e-commerce.html" class="nav__dropdown-link">E-commerce</a></li>
-                            <li><a href="immobilier.html" class="nav__dropdown-link">Immobilier</a></li>
-                            <li><a href="joaillerie-bijouterie.html" class="nav__dropdown-link">Joaillerie & Bijouterie</a></li>
-                            <li><a href="bien-etre-esthetique.html" class="nav__dropdown-link">Bien-être & Esthétique</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="nav__close" id="nav-close">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="nav__toggle" id="nav-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </nav>
+        <!-- Navigation sera injectée automatiquement par le script -->
     </header>
 
     <!-- Hero Section -->
@@ -59,7 +28,7 @@
         <div class="hero__container container">
             <div class="hero__content">
                 <h1 class="hero__title">
-                    Révolutionnez votre <span class="gradient-text">entreprise</span> avec l'IA
+                    Révolutionnez votre <span class="gradient-text" data-text="entreprise">entreprise</span> avec l'IA
                 </h1>
                 <p class="hero__description">
                     Transformez votre site web en une machine de conversion avec nos chatbots intelligents. 
@@ -153,9 +122,9 @@
                     </div>
                     <h3 class="service__title">Mini</h3>
                     <div class="service__pricing">
-                        <div class="service__setup">Implémentation : <strong>29€</strong></div>
+                        <div class="service__setup">Implémentation : <strong>50€</strong></div>
                         <div class="service__monthly">
-                            <span class="service__price">9€</span>
+                            <span class="service__price">29.99€</span>
                             <span class="service__period">/mois</span>
                         </div>
                     </div>
@@ -194,9 +163,9 @@
                     </div>
                     <h3 class="service__title">Starter</h3>
                     <div class="service__pricing">
-                        <div class="service__setup">Implémentation : <strong>49€</strong></div>
+                        <div class="service__setup">Implémentation : <strong>50€</strong></div>
                         <div class="service__monthly">
-                            <span class="service__price">19€</span>
+                            <span class="service__price">49.99€</span>
                             <span class="service__period">/mois</span>
                         </div>
                     </div>
@@ -234,7 +203,7 @@
                     <div class="service__pricing">
                         <div class="service__setup">Implémentation : <strong>99€</strong></div>
                         <div class="service__monthly">
-                            <span class="service__price">69€</span>
+                            <span class="service__price">99.99€</span>
                             <span class="service__period">/mois</span>
                         </div>
                     </div>
@@ -752,6 +721,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="js/navigation.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialize AOS
@@ -761,54 +731,8 @@
             offset: 100
         });
 
-        // Mobile menu toggle
-        const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-menu');
-        const navClose = document.getElementById('nav-close');
-
-        if (navToggle) {
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.add('show-menu');
-            });
-        }
-
-        if (navClose) {
-            navClose.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-            });
-        }
-
-        // Close menu when clicking on nav links
-        const navLinks = document.querySelectorAll('.nav__link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-            });
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY >= 100) {
-                header.classList.add('scroll-header');
-            } else {
-                header.classList.remove('scroll-header');
-            }
-        });
+        // Le code de navigation est maintenant géré par navigation.js
+        // Garder seulement le code spécifique à cette page
 
         // FAQ Toggle functionality
         document.querySelectorAll('.faq__question').forEach(question => {
@@ -816,12 +740,10 @@
                 const faqItem = question.parentElement;
                 const isActive = faqItem.classList.contains('active');
                 
-                // Close all FAQ items
                 document.querySelectorAll('.faq__item').forEach(item => {
                     item.classList.remove('active');
                 });
                 
-                // Open clicked item if it wasn't active
                 if (!isActive) {
                     faqItem.classList.add('active');
                 }
@@ -838,7 +760,6 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    // Focus on the form after scrolling
                     setTimeout(() => {
                         const nameInput = document.getElementById('nom');
                         if (nameInput) {
@@ -856,12 +777,10 @@
                 e.preventDefault();
                 const originalText = phoneBtn.innerHTML;
                 
-                // Afficher le numéro
                 phoneBtn.innerHTML = '<i class="fas fa-phone"></i> 07 56 93 16 47';
                 phoneBtn.style.background = '#28a745';
                 phoneBtn.style.borderColor = '#28a745';
                 
-                // Remettre le texte original après 3 secondes
                 setTimeout(() => {
                     phoneBtn.innerHTML = originalText;
                     phoneBtn.style.background = '';
@@ -870,7 +789,7 @@
             });
         }
 
-        // Fonctions utilitaires pour les messages
+        // Utility functions for messages
         function showMessage(message, type, shouldScroll = true) {
             const formMessages = document.getElementById('form-messages');
             const icon = type === 'success' ? 'fas fa-check-circle' : 
@@ -898,12 +817,10 @@
                 </div>
             `;
             
-            // Ne faire défiler que si demandé et seulement pour les erreurs critiques
             if (shouldScroll && type === 'error') {
                 formMessages.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } 
             
-            // Supprimer le message après 5 secondes pour info/error
             if (type !== 'success') {
                 setTimeout(() => {
                     if (formMessages.innerHTML && !formMessages.innerHTML.includes('form__message--success-special')) {
@@ -922,7 +839,6 @@
 
         function showSuccessMessage(nom, shouldScroll = false) {
             const formMessages = document.getElementById('form-messages');
-            // Créer l'effet confetti
             createConfetti();
             
             const successMessage = `
@@ -969,12 +885,10 @@
             
             formMessages.innerHTML = successMessage;
             
-            // Ne faire défiler que si demandé explicitement
             if (shouldScroll) {
                 formMessages.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }   
             
-            // Supprimer le message après 12 secondes
             setTimeout(() => {
                 if (formMessages.innerHTML) {
                     formMessages.style.opacity = '0';
@@ -990,7 +904,6 @@
         }   
         
         function createConfetti() {
-            // Créer des particules de confetti
             for (let i = 0; i < 50; i++) {
                 createConfettiPiece();
             }
@@ -1012,7 +925,6 @@
             
             document.body.appendChild(confetti);
             
-            // Supprimer la particule après l'animation
             setTimeout(() => {
                 if (confetti.parentNode) {
                     confetti.parentNode.removeChild(confetti);
@@ -1020,12 +932,9 @@
             }, 3000);
         }
 
-        // Gestion du formulaire de contact
+        // Contact form handling
         const contactForm = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
-        const formMessages = document.getElementById('form-messages');
-        
-        // URL de votre API déployée sur Render
         const API_BASE_URL = 'https://magickbot.onrender.com';
         
         if (contactForm) {
@@ -1033,7 +942,6 @@
                 e.preventDefault();
                 e.stopPropagation();
                 
-                // Validation basique
                 const nom = document.getElementById('nom').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const message = document.getElementById('message').value.trim();
@@ -1046,27 +954,22 @@
                     return;
                 }
                 
-                // Validation email
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
                     showMessage('⚠️ Veuillez entrer une adresse email valide.', 'error');
                     return;
                 }
                 
-                // Sauvegarder la position actuelle
                 const currentScrollPosition = window.pageYOffset;
                 
-                // Désactiver le bouton et changer le texte
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Envoi en cours...</span>';
                 
-                // Afficher un message de progression sans défilement
                 showMessage('📤 Envoi de votre demande en cours...', 'info', false);
                 
                 try {
-                    // Créer un contrôleur d'abort pour le timeout
                     const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 secondes timeout
+                    const timeoutId = setTimeout(() => controller.abort(), 15000);
                     
                     const requestData = {
                         nom,
@@ -1078,7 +981,6 @@
                     };
                     
                     console.log('Tentative d\'envoi vers:', `${API_BASE_URL}/api/contact`);
-                    // Appel API réel avec timeout
                     const response = await fetch(`${API_BASE_URL}/api/contact`, {
                         method: 'POST',
                         headers: {
@@ -1093,14 +995,11 @@
                     const data = await response.json();
                     console.log('Données de réponse:', data);
                     
-                    // Succès avec animation confetti
                     if (data.success) {
-                        // Restaurer la position de défilement
                         window.scrollTo({ top: currentScrollPosition, behavior: 'instant' });
                         showSuccessMessage(nom, false);
                         contactForm.reset();
                     } else {
-                        // Erreur du serveur
                         showMessage(`❌ ${data.message || 'Erreur lors de l\'envoi. Veuillez réessayer.'}`, 'error');
                     }
                 } catch (error) {
@@ -1117,7 +1016,6 @@
                     }
                     showMessage(errorMessage, 'error');
                     
-                    // Fallback: simuler un succès en mode développement si l'API n'est pas accessible
                     console.log('Mode fallback activé - simulation de succès');
                     setTimeout(() => {
                         window.scrollTo({ top: currentScrollPosition, behavior: 'instant' });
@@ -1125,14 +1023,13 @@
                         contactForm.reset();
                     }, 2000);
                 } finally {
-                    // Réactiver le bouton
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Envoyer la demande</span>';
                 }
             });
         }
         
-        // Test de connectivité API au chargement de la page
+        // API connectivity test
         async function testAPIConnectivity() {
             try {
                 const response = await fetch(`${API_BASE_URL}/api/health`, {
@@ -1153,10 +1050,9 @@
             }
         }
         
-        // Tester la connectivité au chargement
         testAPIConnectivity();
         
-        // Ajouter les animations CSS pour le confetti
+        // Add confetti animation styles
         const confettiStyles = document.createElement('style');
         confettiStyles.textContent = `
             @keyframes confettiFall {
@@ -1215,6 +1111,8 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .nav__dropdown-toggle i {
@@ -1256,7 +1154,7 @@
         .nav__dropdown-link {
             display: block;
             padding: 12px 25px;
-            color: var(--text-color);
+            color: var(--gray-700);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -1264,19 +1162,38 @@
         }
 
         .nav__dropdown-link:hover {
-            background: linear-gradient(135deg, var(--first-color-light), transparent);
-            color: var(--first-color);
-            border-left-color: var(--first-color);
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), transparent);
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
             transform: translateX(5px);
         }
 
-        /* Mobile Dropdown Styles */
+        /* Mobile specific improvements */
         @media screen and (max-width: 768px) {
+            .nav__menu {
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            }
+
+            .nav__dropdown {
+                width: 100%;
+            }
+
+            .nav__dropdown-toggle {
+                width: 100%;
+                justify-content: space-between;
+                padding: 8px 0;
+                color: var(--white-color);
+                font-size: 1.125rem;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+
             .nav__dropdown-menu {
                 position: static;
                 box-shadow: none;
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.15);
                 margin: 10px 0;
                 border-radius: 8px;
                 transform: none;
@@ -1284,30 +1201,56 @@
                 overflow: hidden;
                 opacity: 1;
                 visibility: visible;
-                transition: max-height 0.3s ease, padding 0.3s ease;
+                transition: max-height 0.4s ease, padding 0.4s ease;
                 padding: 0;
+                width: 100%;
+                backdrop-filter: blur(10px);
             }
 
             .nav__dropdown.active .nav__dropdown-menu {
-                max-height: 300px;
-                padding: 15px 0;
+                max-height: 350px;
+                padding: 10px 0;
             }
 
             .nav__dropdown-link {
                 color: var(--white-color);
-                padding: 10px 25px;
+                padding: 12px 30px;
                 border-left: none;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
             }
 
-            .nav__dropdown-link:hover {
-                background: rgba(255, 255, 255, 0.1);
+            .nav__dropdown-link:hover,
+            .nav__dropdown-link:active {
+                background: rgba(255, 255, 255, 0.15);
                 color: var(--white-color);
-                transform: translateX(10px);
+                transform: translateX(5px);
             }
 
             .nav__dropdown-menu li:last-child .nav__dropdown-link {
                 border-bottom: none;
+            }
+
+            .nav__dropdown-toggle i {
+                font-size: 0.9rem;
+                margin-left: 8px;
+            }
+        }
+
+        /* Touch device optimization */
+        @media (hover: none) and (pointer: coarse) {
+            .nav__dropdown-toggle {
+                -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+                tap-highlight-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .nav__dropdown-link {
+                -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+                tap-highlight-color: rgba(255, 255, 255, 0.1);
             }
         }
 
@@ -1327,42 +1270,5 @@
             animation: dropdownSlide 0.3s ease-out;
         }
     </style>
-
-    <script>
-        // Dropdown Menu functionality
-        const navDropdown = document.querySelector('.nav__dropdown');
-        const dropdownToggle = document.querySelector('.nav__dropdown-toggle');
-
-        if (dropdownToggle) {
-            dropdownToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                navDropdown.classList.toggle('active');
-            });
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (navDropdown && !navDropdown.contains(e.target)) {
-                navDropdown.classList.remove('active');
-            }
-        });
-
-        // Close dropdown when clicking on a dropdown link
-        const dropdownLinks = document.querySelectorAll('.nav__dropdown-link');
-        dropdownLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navDropdown.classList.remove('active');
-                navMenu.classList.remove('show-menu');
-            });
-        });
-
-        // Close dropdown when mobile menu is closed
-        if (navClose) {
-            navClose.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-                navDropdown.classList.remove('active');
-            });
-        }
-    </script>
 </body>
 </html>

@@ -165,10 +165,53 @@ input, textarea, select {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Fallback pour les navigateurs qui ne supportent pas background-clip */
+.gradient-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(255, 255, 255, 0.95);
+  z-index: -1;
+}
+
+/* Fix pour les pages catégories - gradient text orange */
+.category-hero .gradient-text {
+  background: linear-gradient(135deg, #ff8c42, #ffa500, #ff6b35) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: var(--font-extra-bold);
+}
+
+/* Fallback amélioré pour les pages catégories - orange */
+.category-hero .gradient-text::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #ff8c42;
+  z-index: -1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Support complet pour tous les navigateurs - orange */
+@supports not (-webkit-background-clip: text) {
+  .category-hero .gradient-text {
+    background: none !important;
+    color: #ff8c42 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    font-weight: var(--font-extra-bold);
+  }
 }
 
 /* ===== BUTTONS ===== */
@@ -222,16 +265,18 @@ input, textarea, select {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(15px);
   z-index: var(--z-fixed);
   transition: var(--transition-normal);
-  border-bottom: 1px solid var(--gray-100);
+  border-bottom: 1px solid var(--gray-200);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 }
 
 .scroll-header {
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: var(--shadow-light);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid var(--gray-300);
 }
 
 .nav {
@@ -1200,6 +1245,7 @@ input, textarea, select {
   
   .nav__link {
     font-size: 1.125rem;
+    color: var(--gray-900);
   }
   
   .nav__close {
@@ -1207,6 +1253,7 @@ input, textarea, select {
     top: 1rem;
     right: 1.5rem;
     display: block;
+    color: var(--gray-900);
   }
   
   .nav__toggle {
@@ -1264,209 +1311,66 @@ input, textarea, select {
   }
 }
 
-@media screen and (max-width: 576px) {
-  :root {
-    --h1-font-size: 1.75rem;
-    --h2-font-size: 1.5rem;
-    --h3-font-size: 1.125rem;
-    --normal-font-size: 0.9rem;
-  }
-  
-  .container {
-    padding: 0 0.75rem;
-  }
-  
-  .section {
-    padding: 3rem 0 2rem;
-  }
-  
-  .nav__menu {
+/* Mobile Dropdown Styles */
+@media screen and (max-width: 768px) {
+  .nav__dropdown-menu {
+    position: static;
+    box-shadow: none;
+    background: var(--white-color);
+    border: 1px solid var(--gray-200);
+    margin: 10px 0;
+    border-radius: 8px;
+    transform: none;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 1;
+    visibility: visible;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0;
     width: 100%;
-    padding: 4rem 1.5rem 2rem;
   }
-  
-  .hero__title {
-    line-height: 1.2;
-    margin-bottom: var(--mb-1);
-  }
-  
-  .hero__description {
-    font-size: 1rem;
-    margin-bottom: var(--mb-2);
-  }
-  
-  .hero__stats {
-    grid-template-columns: 1fr;
-    gap: var(--mb-1);
-    text-align: center;
-  }
-  
-  .stat {
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: var(--border-radius-md);
-  }
-  
-  .stat__number {
-    font-size: 1.5rem;
-  }
-  
-  .btn {
-    padding: 0.875rem 1.5rem;
-    font-size: 0.9rem;
-  }
-  
-  .service__card {
-    padding: 1.5rem 1rem;
-  }
-  
-  .service__icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: var(--mb-1);
-  }
-  
-  .service__icon i {
-    font-size: 1.5rem;
-  }
-  
-  .service__price {
-    font-size: 1rem;
-    padding: 0.75rem;
-  }
-  
-  .testimonial__card {
-    padding: 1.25rem;
-  }
-  
-  .testimonial__avatar {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-  
-  .contact__container {
-    gap: 1.5rem;
-  }
-  
-  .contact__form {
-    padding: 1.5rem 1rem;
-  }
-  
-  .contact__detail i {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-  
-  .form__input {
-    padding: 0.75rem;
-    font-size: 0.9rem;
-  }
-  
-  .form__textarea {
-    min-height: 100px;
-  }
-  
-  .about__image-wrapper {
-    height: 250px;
-  }
-  
-  .about__main-visual {
-    width: 120px;
-    height: 120px;
-  }
-  
-  .about__main-visual i {
-    font-size: 3rem;
-  }
-  
-  .decoration-1 {
-    width: 150px;
-    height: 150px;
-  }
-  
-  .decoration-2 {
-    width: 100px;
-    height: 100px;
-  }
-}
 
-@media screen and (max-width: 480px) {
-  .container {
-    padding: 0 0.5rem;
+  .nav__dropdown.active .nav__dropdown-menu {
+    max-height: 350px;
+    padding: 10px 0;
   }
-  
-  .hero__title {
-    font-size: 1.5rem;
-  }
-  
-  .hero__description {
-    font-size: 0.9rem;
-  }
-  
-  .section__title {
-    font-size: 1.25rem;
-  }
-  
-  .section__description {
-    font-size: 0.9rem;
-  }
-  
-  .btn {
-    padding: 0.75rem 1.25rem;
-    font-size: 0.85rem;
-  }
-  
-  .service__card,
-  .testimonial__card {
-    padding: 1rem;
-  }
-  
-  .contact__form {
-    padding: 1rem;
-  }
-  
-  .nav__brand {
-    font-size: 1.25rem;
-  }
-  
-  .nav__icon {
-    font-size: 1.5rem;
-  }
-  
-  /* Ensure iframe is responsive */
-  .contact__form iframe {
-    height: 400px !important;
-    min-height: 400px;
-  }
-}
 
-@media screen and (max-width: 360px) {
-  .hero__title {
-    font-size: 1.375rem;
+  .nav__dropdown-link {
+    color: var(--gray-700) !important;
+    padding: 12px 30px;
+    border-left: none;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--white-color);
   }
-  
-  .btn {
-    padding: 0.625rem 1rem;
-    font-size: 0.8rem;
+
+  .nav__dropdown-link:hover {
+    background: var(--gray-100) !important;
+    color: var(--primary-color) !important;
+    transform: translateX(5px);
   }
-  
-  .service__icon {
-    width: 50px;
-    height: 50px;
+
+  .nav__dropdown-link.active {
+    color: var(--primary-color) !important;
+    background: var(--light-gray) !important;
+    font-weight: var(--font-semi-bold);
   }
-  
-  .service__icon i {
-    font-size: 1.25rem;
+
+  .nav__dropdown-menu li:last-child .nav__dropdown-link {
+    border-bottom: none;
   }
-  
-  .contact__form iframe {
-    height: 350px !important;
-  }
-  
-  .nav__brand {
+
+  .nav__dropdown-toggle {
+    color: var(--gray-900) !important;
     font-size: 1.125rem;
+    padding: 0;
+  }
+
+  .nav__dropdown-toggle i {
+    font-size: 0.9rem;
+    margin-left: 8px;
+    color: var(--primary-color);
   }
 }
 

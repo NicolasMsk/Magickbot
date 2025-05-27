@@ -20,38 +20,7 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <nav class="nav container">
-            <div class="nav__brand">
-                <img src="logo_magickbot.png" alt="Magickbot Logo" class="nav__logo">
-                <span class="nav__title">Magickbot</span>
-            </div>
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item"><a href="index.html#accueil" class="nav__link">Accueil</a></li>
-                    <li class="nav__item"><a href="index.html#services" class="nav__link">Services</a></li>
-                    <li class="nav__item"><a href="index.html#about" class="nav__link">À propos</a></li>
-                    <li class="nav__item"><a href="index.html#testimonials" class="nav__link">Témoignages</a></li>
-                    <li class="nav__item"><a href="index.html#contact" class="nav__link">Contact</a></li>
-                    <li class="nav__item nav__dropdown">
-                        <a href="#" class="nav__link nav__dropdown-toggle">
-                            Catégories <i class="fas fa-chevron-down"></i>
-                        </a>
-                        <ul class="nav__dropdown-menu">
-                            <li><a href="e-commerce.html" class="nav__dropdown-link">E-commerce</a></li>
-                            <li><a href="immobilier.html" class="nav__dropdown-link">Immobilier</a></li>
-                            <li><a href="joaillerie-bijouterie.html" class="nav__dropdown-link">Joaillerie & Bijouterie</a></li>
-                            <li><a href="bien-etre-esthetique.html" class="nav__dropdown-link active">Bien-être & Esthétique</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="nav__close" id="nav-close">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="nav__toggle" id="nav-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </nav>
+        <!-- Navigation sera injectée automatiquement par le script -->
     </header>
 
     <!-- Hero Section Bien-être -->
@@ -474,6 +443,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="js/navigation.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Initialize AOS
@@ -483,81 +453,7 @@
             offset: 100
         });
 
-        // Mobile menu toggle
-        const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-menu');
-        const navClose = document.getElementById('nav-close');
-
-        if (navToggle) {
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.add('show-menu');
-            });
-        }
-
-        if (navClose) {
-            navClose.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-            });
-        }
-
-        // Close menu when clicking on nav links
-        const navLinks = document.querySelectorAll('.nav__link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-            });
-        });
-
-        // Dropdown Menu functionality
-        const navDropdown = document.querySelector('.nav__dropdown');
-        const dropdownToggle = document.querySelector('.nav__dropdown-toggle');
-
-        if (dropdownToggle) {
-            dropdownToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                navDropdown.classList.toggle('active');
-            });
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (navDropdown && !navDropdown.contains(e.target)) {
-                navDropdown.classList.remove('active');
-            }
-        });
-
-        // Close dropdown when clicking on a dropdown link
-        const dropdownLinks = document.querySelectorAll('.nav__dropdown-link');
-        dropdownLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navDropdown.classList.remove('active');
-                navMenu.classList.remove('show-menu');
-            });
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY >= 100) {
-                header.classList.add('scroll-header');
-            } else {
-                header.classList.remove('scroll-header');
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+        // Le code de navigation est maintenant géré par navigation.js
     </script>
 
     <style>
