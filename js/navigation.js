@@ -97,9 +97,6 @@ class NavigationManager {
                             </ul>
                         </li>
                     </ul>
-                    <div class="nav__close" id="nav-close">
-                        <i class="fas fa-times"></i>
-                    </div>
                 </div>
                 <div class="nav__toggle" id="nav-toggle">
                     <i class="fas fa-bars"></i>
@@ -124,23 +121,14 @@ class NavigationManager {
     initEvents() {
         const navToggle = document.getElementById('nav-toggle');
         const navMenu = document.getElementById('nav-menu');
-        const navClose = document.getElementById('nav-close');
         const navDropdown = document.querySelector('.nav__dropdown');
         const dropdownToggle = document.querySelector('.nav__dropdown-toggle');
 
-        // Mobile menu toggle
+        // Mobile menu toggle - ouvrir/fermer avec le même bouton
         if (navToggle) {
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.add('show-menu');
-                if (navDropdown) {
-                    navDropdown.classList.remove('active');
-                }
-            });
-        }
-
-        if (navClose) {
-            navClose.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
+            navToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navMenu.classList.toggle('show-menu');
                 if (navDropdown) {
                     navDropdown.classList.remove('active');
                 }
@@ -149,12 +137,21 @@ class NavigationManager {
 
         // Dropdown Menu functionality
         if (dropdownToggle) {
+            // Click event
             dropdownToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 navDropdown.classList.toggle('active');
             });
 
+            // Touch events for better mobile support
+            dropdownToggle.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navDropdown.classList.toggle('active');
+            });
+
+            // Prevent double firing on devices that support both touch and click
             dropdownToggle.addEventListener('touchstart', (e) => {
                 e.stopPropagation();
             });
@@ -171,29 +168,47 @@ class NavigationManager {
             });
         });
 
-        // Close dropdown when clicking on a dropdown link
+        // Gestion des liens dropdown - AMÉLIORATION CRITIQUE
         const dropdownLinks = document.querySelectorAll('.nav__dropdown-link');
         dropdownLinks.forEach(link => {
-            link.addEventListener('click', () => {
+            // Pour la navigation normale (click)
+            link.addEventListener('click', (e) => {
+                // Ne pas empêcher la navigation par défaut
                 navDropdown.classList.remove('active');
                 navMenu.classList.remove('show-menu');
+                
+                // Permettre la navigation normale
+                window.location.href = link.href;
             });
             
-            link.addEventListener('touchend', () => {
-                navDropdown.classList.remove('active');
-                navMenu.classList.remove('show-menu');
-            });
+            // Pour les appareils tactiles - SUPPRESSION des événements touchend qui bloquent
+            // On garde seulement le click qui fonctionne sur tous les appareils
         });
 
-        // Close dropdown when clicking outside
+        // Close menu when clicking outside (amélioré)
         document.addEventListener('click', (e) => {
-            if (navDropdown && !navDropdown.contains(e.target)) {
+            // Vérifier si le clic est à l'extérieur du menu ET du bouton toggle
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('show-menu');
+                if (navDropdown) {
+                    navDropdown.classList.remove('active');
+                }
+            }
+            // Fermer le dropdown si on clique à l'extérieur (même dans le menu)
+            else if (navDropdown && !navDropdown.contains(e.target)) {
                 navDropdown.classList.remove('active');
             }
         });
 
+        // Touch events pour mobile - SIMPLIFICATION
         document.addEventListener('touchstart', (e) => {
-            if (navDropdown && !navDropdown.contains(e.target)) {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('show-menu');
+                if (navDropdown) {
+                    navDropdown.classList.remove('active');
+                }
+            }
+            else if (navDropdown && !navDropdown.contains(e.target)) {
                 navDropdown.classList.remove('active');
             }
         });
