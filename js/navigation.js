@@ -1,245 +1,349 @@
-// Navigation commune pour toutes les pages
-class NavigationManager {
-    constructor() {
-        this.currentPage = this.getCurrentPage();
-        this.init();
-    }
-
-    getCurrentPage() {
-        const path = window.location.pathname;
-        const filename = path.split('/').pop() || 'index.html';
-        return filename.replace('.html', '');
-    }
-
-    getMenuStructure() {
-        const isIndex = this.currentPage === 'index' || this.currentPage === '';
-        
-        return {
-            brand: {
-                logo: 'logo_magickbot.png',
-                title: 'Magickbot'
-            },
-            items: [
-                { 
-                    text: 'Accueil', 
-                    href: isIndex ? '#accueil' : 'index.html#accueil',
-                    active: isIndex
-                },
-                { 
-                    text: 'Services', 
-                    href: isIndex ? '#services' : 'index.html#services'
-                },
-                { 
-                    text: 'À propos', 
-                    href: isIndex ? '#about' : 'index.html#about'
-                },
-                { 
-                    text: 'Témoignages', 
-                    href: isIndex ? '#testimonials' : 'index.html#testimonials'
-                },
-                { 
-                    text: 'Contact', 
-                    href: isIndex ? '#contact' : 'index.html#contact'
-                }
-            ],
-            dropdown: {
+document.addEventListener('DOMContentLoaded', function() {
+    // Configuration du menu
+    const menuConfig = {
+        logo: {
+            src: 'logo_magickbot.png',
+            alt: 'Magickbot Logo',
+            title: 'Magickbot'
+        },
+        menuItems: [
+            { text: 'Accueil', href: '#accueil' },
+            { text: 'Services', href: '#services' },
+            {
                 text: 'Catégories',
+                isDropdown: true,
                 items: [
-                    {
-                        text: 'E-commerce',
-                        href: 'e-commerce.html',
-                        active: this.currentPage === 'e-commerce'
-                    },
-                    {
-                        text: 'Immobilier',
-                        href: 'immobilier.html',
-                        active: this.currentPage === 'immobilier'
-                    },
-                    {
-                        text: 'Joaillerie & Bijouterie',
-                        href: 'joaillerie-bijouterie.html',
-                        active: this.currentPage === 'joaillerie-bijouterie'
-                    },
-                    {
-                        text: 'Bien-être & Esthétique',
-                        href: 'bien-etre-esthetique.html',
-                        active: this.currentPage === 'bien-etre-esthetique'
-                    }
+                    { text: 'E-commerce', href: 'e-commerce.html' },
+                    { text: 'Immobilier', href: 'immobilier.html' },
+                    { text: 'Bien-être & Esthétique', href: 'bien-etre-esthetique.html' },
+                    { text: 'Joaillerie & Bijouterie', href: 'joaillerie-bijouterie.html' }
                 ]
-            }
-        };
-    }
+            },
+            { text: 'À Propos', href: '#about' },
+            { text: 'FAQ', href: '#faq' },
+            { text: 'Contact', href: '#contact' }
+        ]
+    };
 
-    generateNavHTML() {
-        const menu = this.getMenuStructure();
+    // Créer la structure HTML du menu
+    function createNavigation() {
+        // Vérifier si la navigation existe déjà
+        if (document.querySelector('.nav')) {
+            return;
+        }
+
+        const body = document.body;
         
-        return `
-            <nav class="nav container">
-                <div class="nav__brand">
-                    <img src="${menu.brand.logo}" alt="${menu.brand.title} Logo" class="nav__logo">
-                    <span class="nav__title">${menu.brand.title}</span>
-                </div>
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        ${menu.items.map(item => `
-                            <li class="nav__item">
-                                <a href="${item.href}" class="nav__link ${item.active ? 'active' : ''}">${item.text}</a>
+        const nav = document.createElement('nav');
+        nav.className = 'nav';
+        
+        const container = document.createElement('div');
+        container.className = 'nav__container container';
+
+        // Brand section
+        const brand = document.createElement('a');
+        brand.className = 'nav__brand';
+        brand.href = '#';
+        brand.innerHTML = `
+            <img src="${menuConfig.logo.src}" alt="${menuConfig.logo.alt}" class="nav__logo">
+            <span class="nav__title">${menuConfig.logo.title}</span>
+        `;
+
+        // Menu section
+        const menu = document.createElement('div');
+        menu.className = 'nav__menu';
+        menu.id = 'nav-menu';
+
+        const menuList = document.createElement('ul');
+        menuList.className = 'nav__list';
+
+        // Créer les items du menu
+        menuConfig.menuItems.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.className = 'nav__item';
+
+            if (item.isDropdown) {
+                // Créer dropdown
+                listItem.className += ' nav__dropdown';
+                listItem.innerHTML = `
+                    <div class="nav__dropdown-toggle nav__link" role="button" tabindex="0">
+                        ${item.text}
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <ul class="nav__dropdown-menu">
+                        ${item.items.map(subItem => `
+                            <li>
+                                <a href="${subItem.href}" class="nav__dropdown-link">
+                                    ${subItem.text}
+                                </a>
                             </li>
                         `).join('')}
-                        <li class="nav__item nav__dropdown">
-                            <a href="#" class="nav__link nav__dropdown-toggle">
-                                ${menu.dropdown.text} <i class="fas fa-chevron-down"></i>
-                            </a>
-                            <ul class="nav__dropdown-menu">
-                                ${menu.dropdown.items.map(item => `
-                                    <li><a href="${item.href}" class="nav__dropdown-link ${item.active ? 'active' : ''}">${item.text}</a></li>
-                                `).join('')}
-                            </ul>
-                        </li>
                     </ul>
-                </div>
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </nav>
+                `;
+            } else {
+                // Créer lien normal
+                listItem.innerHTML = `
+                    <a href="${item.href}" class="nav__link">
+                        ${item.text}
+                    </a>
+                `;
+            }
+
+            menuList.appendChild(listItem);
+        });
+
+        menu.appendChild(menuList);
+
+        // Toggle button pour mobile
+        const toggle = document.createElement('button');
+        toggle.className = 'nav__toggle';
+        toggle.id = 'nav-toggle';
+        toggle.setAttribute('aria-label', 'Toggle menu');
+        toggle.innerHTML = `
+            <span class="nav__toggle-line"></span>
+            <span class="nav__toggle-line"></span>
+            <span class="nav__toggle-line"></span>
         `;
+
+        // Créer l'overlay pour mobile
+        const overlay = document.createElement('div');
+        overlay.className = 'nav__overlay';
+        overlay.id = 'nav-overlay';
+
+        // Assembler la navigation
+        container.appendChild(brand);
+        container.appendChild(menu);
+        container.appendChild(toggle);
+        nav.appendChild(container);
+        nav.appendChild(overlay);
+
+        // Insérer au début du body
+        body.insertBefore(nav, body.firstChild);
     }
 
-    init() {
-        // Injecter le HTML de navigation
-        const header = document.querySelector('.header');
-        if (header) {
-            header.innerHTML = this.generateNavHTML();
-        }
+    // Initialiser la navigation
+    createNavigation();
 
-        // Initialiser les événements après injection du HTML
-        setTimeout(() => {
-            this.initEvents();
-        }, 100);
-    }
-
-    initEvents() {
+    // Fonctionnalités interactives
+    function initializeNavigation() {
         const navToggle = document.getElementById('nav-toggle');
         const navMenu = document.getElementById('nav-menu');
-        const navDropdown = document.querySelector('.nav__dropdown');
-        const dropdownToggle = document.querySelector('.nav__dropdown-toggle');
+        const navOverlay = document.getElementById('nav-overlay');
+        const navLinks = document.querySelectorAll('.nav__link:not(.nav__dropdown-toggle)');
+        const dropdowns = document.querySelectorAll('.nav__dropdown');
 
-        // Mobile menu toggle - ouvrir/fermer avec le même bouton
-        if (navToggle) {
-            navToggle.addEventListener('click', (e) => {
+        console.log('Navigation initialized:', { navToggle, navMenu, navOverlay, dropdowns });
+
+        // Fonction pour fermer le menu
+        function closeMenu() {
+            navMenu?.classList.remove('show-menu');
+            navToggle?.classList.remove('active');
+            navOverlay?.classList.remove('show');
+            document.body.style.overflow = '';
+            document.body.style.height = '';
+            document.documentElement.style.overflow = '';
+        }
+
+        // Fonction pour ouvrir le menu
+        function openMenu() {
+            navMenu?.classList.add('show-menu');
+            navToggle?.classList.add('active');
+            navOverlay?.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            document.body.style.height = '100vh';
+            document.documentElement.style.overflow = 'hidden';
+        }
+
+        // Toggle menu mobile
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
-                navMenu.classList.toggle('show-menu');
-                if (navDropdown) {
-                    navDropdown.classList.remove('active');
+                
+                console.log('Toggle clicked, current menu state:', navMenu.classList.contains('show-menu'));
+                
+                if (navMenu.classList.contains('show-menu')) {
+                    closeMenu();
+                } else {
+                    openMenu();
                 }
             });
         }
 
-        // Dropdown Menu functionality
-        if (dropdownToggle) {
-            // Click event
-            dropdownToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                navDropdown.classList.toggle('active');
-            });
-
-            // Touch events for better mobile support
-            dropdownToggle.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                navDropdown.classList.toggle('active');
-            });
-
-            // Prevent double firing on devices that support both touch and click
-            dropdownToggle.addEventListener('touchstart', (e) => {
-                e.stopPropagation();
-            });
+        // Fermer le menu en cliquant sur l'overlay
+        if (navOverlay) {
+            navOverlay.addEventListener('click', closeMenu);
         }
 
-        // Close menu when clicking on nav links (EXCEPT dropdown toggle)
-        const navLinks = document.querySelectorAll('.nav__link:not(.nav__dropdown-toggle)');
+        // Gestion des dropdowns
+        dropdowns.forEach(dropdown => {
+            const toggle = dropdown.querySelector('.nav__dropdown-toggle');
+            
+            if (toggle) {
+                // Événement de clic (fonctionne sur mobile et desktop)
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    console.log('Dropdown clicked:', dropdown);
+                    
+                    // Fermer les autres dropdowns
+                    dropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle le dropdown actuel
+                    dropdown.classList.toggle('active');
+                });
+
+                // Événement de survol pour desktop uniquement
+                function handleDesktopHover() {
+                    if (window.innerWidth > 768) {
+                        dropdown.addEventListener('mouseenter', () => {
+                            dropdown.classList.add('active');
+                        });
+
+                        dropdown.addEventListener('mouseleave', () => {
+                            dropdown.classList.remove('active');
+                        });
+                    }
+                }
+
+                // Appliquer les événements de survol au chargement
+                handleDesktopHover();
+
+                // Événement tactile pour mobile
+                toggle.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    console.log('Dropdown touched on mobile:', dropdown);
+                    
+                    // Fermer les autres dropdowns
+                    dropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle le dropdown actuel
+                    dropdown.classList.toggle('active');
+                }, { passive: false });
+            }
+        });
+
+        // Fermer les dropdowns en cliquant ailleurs
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav__dropdown')) {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Fermer le menu mobile lors du clic sur un lien
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                navMenu.classList.remove('show-menu');
-                if (navDropdown) {
-                    navDropdown.classList.remove('active');
+                if (navMenu && navMenu.classList.contains('show-menu')) {
+                    closeMenu();
                 }
             });
         });
 
-        // Gestion des liens dropdown - AMÉLIORATION CRITIQUE
-        const dropdownLinks = document.querySelectorAll('.nav__dropdown-link');
-        dropdownLinks.forEach(link => {
-            // Pour la navigation normale (click)
-            link.addEventListener('click', (e) => {
-                // Ne pas empêcher la navigation par défaut
-                navDropdown.classList.remove('active');
-                navMenu.classList.remove('show-menu');
-                
-                // Permettre la navigation normale
-                window.location.href = link.href;
-            });
-            
-            // Pour les appareils tactiles - SUPPRESSION des événements touchend qui bloquent
-            // On garde seulement le click qui fonctionne sur tous les appareils
-        });
-
-        // Close menu when clicking outside (amélioré)
-        document.addEventListener('click', (e) => {
-            // Vérifier si le clic est à l'extérieur du menu ET du bouton toggle
-            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-                navMenu.classList.remove('show-menu');
-                if (navDropdown) {
-                    navDropdown.classList.remove('active');
-                }
-            }
-            // Fermer le dropdown si on clique à l'extérieur (même dans le menu)
-            else if (navDropdown && !navDropdown.contains(e.target)) {
-                navDropdown.classList.remove('active');
-            }
-        });
-
-        // Touch events pour mobile - SIMPLIFICATION
-        document.addEventListener('touchstart', (e) => {
-            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-                navMenu.classList.remove('show-menu');
-                if (navDropdown) {
-                    navDropdown.classList.remove('active');
-                }
-            }
-            else if (navDropdown && !navDropdown.contains(e.target)) {
-                navDropdown.classList.remove('active');
-            }
-        });
-
-        // Header scroll effect
+        // Gestion du scroll header
         window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY >= 100) {
-                header.classList.add('scroll-header');
-            } else {
-                header.classList.remove('scroll-header');
+            const nav = document.querySelector('.nav');
+            if (nav) {
+                if (window.scrollY >= 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
             }
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+        // Gestion responsive
+        function handleResize() {
+            if (window.innerWidth > 768) {
+                closeMenu();
+                // Fermer tous les dropdowns en mode desktop
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                
+                // Réactiver les événements de survol pour desktop
+                dropdowns.forEach(dropdown => {
+                    const toggle = dropdown.querySelector('.nav__dropdown-toggle');
+                    if (toggle) {
+                        // Nettoyer les anciens événements
+                        dropdown.replaceWith(dropdown.cloneNode(true));
+                        
+                        // Récupérer la nouvelle référence
+                        const newDropdown = document.querySelector(`[data-dropdown="${dropdown.dataset.dropdown || dropdown.className}"]`) || dropdown;
+                        const newToggle = newDropdown.querySelector('.nav__dropdown-toggle');
+                        
+                        if (newToggle) {
+                            // Rétablir les événements de clic
+                            newToggle.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                
+                                dropdowns.forEach(otherDropdown => {
+                                    if (otherDropdown !== newDropdown) {
+                                        otherDropdown.classList.remove('active');
+                                    }
+                                });
+                                
+                                newDropdown.classList.toggle('active');
+                            });
+
+                            // Ajouter les événements de survol pour desktop
+                            newDropdown.addEventListener('mouseenter', () => {
+                                newDropdown.classList.add('active');
+                            });
+
+                            newDropdown.addEventListener('mouseleave', () => {
+                                newDropdown.classList.remove('active');
+                            });
+                        }
+                    }
+                });
+            } else {
+                // Mode mobile - s'assurer que seuls les clics fonctionnent
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        // Prévenir le scroll du body quand le menu est ouvert
+        document.addEventListener('touchmove', (e) => {
+            if (navMenu && navMenu.classList.contains('show-menu')) {
+                // Permettre le scroll seulement dans le menu
+                if (!e.target.closest('.nav__menu')) {
+                    e.preventDefault();
                 }
-            });
+            }
+        }, { passive: false });
+
+        // Gestion de la touche Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (navMenu && navMenu.classList.contains('show-menu')) {
+                    closeMenu();
+                }
+                // Fermer tous les dropdowns
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
         });
     }
-}
 
-// Initialiser la navigation quand le DOM est chargé
-document.addEventListener('DOMContentLoaded', () => {
-    new NavigationManager();
+    // Initialiser après un court délai pour s'assurer que le DOM est prêt
+    setTimeout(initializeNavigation, 100);
 });
