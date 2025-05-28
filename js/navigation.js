@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
             title: 'Magickbot'
         },
         menuItems: [
-            { text: 'Accueil', href: '#accueil' },
-            { text: 'Services', href: '#services' },
+            { text: 'Accueil', href: 'index.html#accueil' },
+            { text: 'Services', href: 'index.html#services' },
             {
                 text: 'Catégories',
                 isDropdown: true,
@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     { text: 'Joaillerie & Bijouterie', href: 'joaillerie-bijouterie.html' }
                 ]
             },
-            { text: 'À Propos', href: '#about' },
-            { text: 'FAQ', href: '#faq' },
-            { text: 'Contact', href: '#contact' }
+            { text: 'À Propos', href: 'index.html#about' },
+            { text: 'FAQ', href: 'index.html#faq' },
+            { text: 'Contact', href: 'index.html#contact' }
         ]
     };
 
